@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[return new Promise(function(resolve, reject) {
+	${1:$TM_SELECTED_TEXT}
+});
+]]></content>
+	<tabTrigger>Promise</tabTrigger>
+	<scope>source.js</scope>
+    <description>Promise</description>
+</snippet>

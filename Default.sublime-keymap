@@ -1,0 +1,3 @@
+[
+  { "keys": ["ctrl+super+p"], "command": "related_files"}
+]

@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[initComponent: function() {
+	this.debug(arguments);
+	${2:$TM_SELECTED_TEXT}
+	this.callParent(arguments);
+},
+]]></content>
+	<tabTrigger>initComponent</tabTrigger>
+	<scope>source.js</scope>
+    <description>initComponent</description>
+</snippet>

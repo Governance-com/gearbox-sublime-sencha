@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>Gearbox globals</string>
+    <key>scope</key>
+    <string></string>
+    <key>settings</key>
+    <dict>
+        <key>shellVariables</key>
+        <array>
+            <dict>
+                <key>name</key>
+                <string>GEARBOX_SIESTA_PATH</string>
+                <key>value</key>
+                <string><![CDATA[/Users/niels/AS/siesta/]]></string>
+            </dict>
+        </array>
+    </dict>
+    <key>uuid</key>
+    <string>ebdc2f56-132c-11e4-bba0-b2227cce2b54</string>
+</dict>
+</plist>

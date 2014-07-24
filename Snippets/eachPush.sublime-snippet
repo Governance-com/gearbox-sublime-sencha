@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[var ${1:items} = [];
+_.each(${2:arr}, function(${3:item}, ${4:key}) {
+	${5:console.log('$2:', $4, '=', $3);}
+	${7}
+	${6:$1.push($3);}
+});
+]]></content>
+	<tabTrigger>eachPush</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

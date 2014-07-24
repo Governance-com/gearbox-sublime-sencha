@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[$1: function($2) {
+	this.debug(arguments);
+
+	${3:$TM_SELECTED_TEXT}
+},$4
+]]></content>
+	<tabTrigger>fn</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

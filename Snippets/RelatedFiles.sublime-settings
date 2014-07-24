@@ -1,0 +1,58 @@
+{
+	"patterns": {
+		/*
+		^			# from the beginning (governance)
+		.+?			# get everything (/packages/gearbox)
+		\/			# until you hit a folder (/)
+
+		( ?:		# hide the chaos
+		  app |		# (app, src or tests_)
+		  src |
+		  tests
+		)
+
+		( ?:		# unused
+		  \/		# next folder (/)
+		  \w*		# named (view, controller, data)
+		)?			# folder is not mandatory (eg. files in app/)
+
+		( ?:		# useless for matching later
+		  \/		# and check if the one following is a submodule
+		  fund
+		)?			# folder is not mandatory (eg. in gearbox)
+
+		\/?			# removes leading slash from folders if possible
+		( .*		# get the interesting part of the path
+		  \/?		# walk the folders
+		)?			# folders not mandatory
+
+		\/			# save the last folder
+		( \w*		# get the filename
+		)
+
+		(?:\.t)?	# without test extension
+		\.js		# and without the javascript extension
+
+		$			# fin.
+
+		# ^.+?\/(?:app|src|tests)(?:\/\w*)?(?:\/fund)?\/?(.*\/?)?\/(\w*)(?:\.t)?\.js$
+		*/
+
+		"^.+?\/(?:app|src|tests)(?:\/\\w*)?(?:\/fund)?\/?(.*\/?)?\/(\\w*)(?:\\.t)?\\.js$": [
+			// "*/model/$1/$2.js",
+			// "*/model/*/$1/$2.js",
+
+			"*/model/$2.js",
+			"*/model/*/$2.js",
+			"*/model/*/*/$2.js",
+
+			"*/*/$1/$2*.js",
+			"*/*/*/$1/$2*.js",
+
+			"packages/gearbox/*/*/$1/$2*.js",
+			"packages/gearbox/*/*/*/$1/$2*.js",
+
+			"ext/src/$1/$2.js"
+		],
+	}
+}

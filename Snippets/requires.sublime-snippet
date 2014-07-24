@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+requires: [
+	'$1'
+],$2
+]]></content>
+	<tabTrigger>requires</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

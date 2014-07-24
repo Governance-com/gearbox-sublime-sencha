@@ -1,0 +1,6 @@
+<snippet>
+	<content><![CDATA[this.debug(${1:arguments});
+]]></content>
+	<tabTrigger>debug</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

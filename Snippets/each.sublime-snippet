@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[_.each(${1:arr}, function(${2:item}, key) {
+	${3:console.log('$2:', key, '=', $2);}
+	${4:$TM_SELECTED_TEXT}
+});
+]]></content>
+	<tabTrigger>each</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

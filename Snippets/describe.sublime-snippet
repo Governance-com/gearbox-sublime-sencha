@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[t.describe('$1', function(t) {
+	$2
+});]]></content>
+	<tabTrigger>describe</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

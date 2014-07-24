@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[afterRender: function() {
+	this.debug(arguments);
+	${2:$TM_SELECTED_TEXT}
+	this.callParent(arguments);
+},
+]]></content>
+	<tabTrigger>afterRender</tabTrigger>
+	<scope>source.js</scope>
+    <description>afterRender</description>
+</snippet>

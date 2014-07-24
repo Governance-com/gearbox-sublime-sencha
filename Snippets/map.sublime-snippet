@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[var ${1:items} = _.map(${2:arr}, function(${3:item}, ${4:key}) {
+	${5:this.log('$2:', $4, '=', $3);}
+
+	return item;
+}, this);
+]]></content>
+	<tabTrigger>map</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

@@ -1,0 +1,14 @@
+{
+	"cmd": [
+		"/usr/local/bin/phantomjs",
+		"${file/^(.*)\\/(app|src|tests).+$/$1/g}/siesta/bin/phantomjs-launcher.js",
+		"${file/^(.*)\\/(app|src|tests).+$/$1/g}/siesta/bin",
+		"http://127.0.0.1:1337/packages/gearbox/tests.html",
+		"--verbose",
+		"--no-color",
+		"--filter",
+		"${file/^.*?(app|src|tests)\\/([^\\.]+).+$/$2/g}"
+	],
+    "file_regex": "\\[FAIL\\]  (.*?)",
+	"selector": "source.js"
+}

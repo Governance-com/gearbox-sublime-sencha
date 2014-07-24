@@ -1,0 +1,8 @@
+<snippet>
+	<content><![CDATA[items: [{
+	$1
+}],
+]]></content>
+	<tabTrigger>items</tabTrigger>
+	<scope>source.js</scope>
+</snippet>

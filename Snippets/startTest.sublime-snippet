@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[startTest(function(t) {
+	$1
+});]]></content>
+	<tabTrigger>startTest</tabTrigger>
+	<scope>source.js</scope>
+</snippet>
