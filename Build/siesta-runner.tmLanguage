@@ -19,18 +19,16 @@
 			<string>^(\[PASS\]|ok)(.*)$</string>
 		</dict>
 		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>markup.deleted</string>
-				</dict>
-			</dict>
 			<key>match</key>
-			<string>^(\[FAIL\]|fail)(.*)$</string>
+			<string>^(\[(FAIL|WARN|ERROR)\]|\w+Error:|fail)(.*)$</string>
 			<key>name</key>
 			<string>markup.deleted</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\[(W|WARN)\].*$</string>
+			<key>name</key>
+			<string>markup.changed</string>
 		</dict>
 		<dict>
 			<key>match</key>

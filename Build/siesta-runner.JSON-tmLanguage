@@ -7,13 +7,11 @@
 			}
 		}
 	}, {
-		"match": "^(\\[FAIL\\]|fail)(.*)$",
-		"name": "markup.deleted",
-		"captures": {
-			"1": {
-				"name": "markup.deleted"
-			}
-		}
+		"match": "^\\[(W|WARN)\\].*$",
+		"name": "markup.changed"
+	}, {
+		"match": "^(\\[(FAIL|ERROR)\\]|\\w+Error:|fail)(.*)$",
+		"name": "markup.deleted"
 	}, {
 		"match": "^(\\d+) passed, 0 failed assertions took (.+?s) to complete$",
 		"name": "markup.inserted"
