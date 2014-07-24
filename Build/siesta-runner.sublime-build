@@ -1,8 +1,9 @@
 {
+	"working_dir": "${file/^(.*)\\/(app|src|tests).+$/$1/g}",
 	"cmd": [
 		"/usr/local/bin/phantomjs",
-		"${file/^(.*)\\/(app|src|tests).+$/$1/g}/siesta/bin/phantomjs-launcher.js",
-		"${file/^(.*)\\/(app|src|tests).+$/$1/g}/siesta/bin",
+		"siesta/bin/phantomjs-launcher.js",
+		"siesta/bin",
 		"http://127.0.0.1:1337/packages/gearbox/tests.html",
 		"--verbose",
 		"--no-color",
