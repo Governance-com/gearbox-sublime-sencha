@@ -1,3 +1,4 @@
 [
-   { "caption": "Related Files", "command": "related_files" }
+   { "caption": "Related Files", "command": "related_files" },
+   { "caption": "Related Files Lucky", "command": "related_files_lucky" }
 ]

@@ -14,7 +14,7 @@
                 <key>name</key>
                 <string>GEARBOX_SIESTA_PATH</string>
                 <key>value</key>
-                <string><![CDATA[/Users/niels/AS/siesta/]]></string>
+                <string><![CDATA[$HOME/siesta/]]></string>
             </dict>
         </array>
     </dict>

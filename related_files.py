@@ -81,6 +81,10 @@ class Related(object):
     def __to_posixpath(self, path):
         return re.sub("\\\\", "/", path)
 
+class RelatedFilesLuckyCommand(sublime_plugin.WindowCommand):
+    def run(self, index=None):
+        sublime.active_window().run_command("related_files", {"index": 0})
+
 class RelatedFilesCommand(sublime_plugin.WindowCommand):
     def run(self, index=None):
         active_file_path = self.__active_file_path()
@@ -89,13 +93,16 @@ class RelatedFilesCommand(sublime_plugin.WindowCommand):
             # Builds a list of related files for the current open file.
             self.__related = Related(active_file_path, self.__patterns(), sublime.active_window().folders())
 
-            self.window.show_quick_panel(self.__related.descriptions(), self.__open_file)
+            if index != None:
+                self.__open_file(index)
+            else:
+                self.window.show_quick_panel(self.__related.descriptions(), self.__open_file)
         else:
             self.__status_msg("No open files")
 
     # Opens the file in path.
     def __open_file(self, index):
-        if index >= 0:
+        if index >= 0 and len(self.__related.files()) > index:
             sublime.set_timeout(lambda: self.window.open_file(self.__related.files()[index]), 0)
         else:
             self.__status_msg("No related files found")
