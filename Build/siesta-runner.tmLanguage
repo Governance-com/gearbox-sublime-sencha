@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>siesta-runner</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>markup.inserted</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^(\[PASS\]|ok)(.*)$</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>markup.deleted</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^(\[FAIL\]|fail)(.*)$</string>
+			<key>name</key>
+			<string>markup.deleted</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^(\d+) passed, 0 failed assertions took (.+?s) to complete$</string>
+			<key>name</key>
+			<string>markup.inserted</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>markup.inserted</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>markup.deleted</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^(\d+) passed, (\d+) failed assertions took (.+?s) to complete$</string>
+			<key>name</key>
+			<string>markup.deleted</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^.*$</string>
+			<key>name</key>
+			<string>comment</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.untitled</string>
+	<key>uuid</key>
+	<string>33d31a43-6e5d-46d3-b6b7-c1f4fdaf6501</string>
+</dict>
+</plist>

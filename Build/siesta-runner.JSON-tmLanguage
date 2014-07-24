@@ -1,0 +1,38 @@
+{
+	"patterns": [{
+		"match": "^(\\[PASS\\]|ok)(.*)$",
+		"captures": {
+			"1": {
+				"name": "markup.inserted"
+			}
+		}
+	}, {
+		"match": "^(\\[FAIL\\]|fail)(.*)$",
+		"name": "markup.deleted",
+		"captures": {
+			"1": {
+				"name": "markup.deleted"
+			}
+		}
+	}, {
+		"match": "^(\\d+) passed, 0 failed assertions took (.+?s) to complete$",
+		"name": "markup.inserted"
+	}, {
+		"match": "^(\\d+) passed, (\\d+) failed assertions took (.+?s) to complete$",
+		"name": "markup.deleted",
+		"captures": {
+			"1": {
+				"name": "markup.inserted"
+			},
+			"2": {
+				"name": "markup.deleted"
+			}
+		}
+	}, {
+		"match": "^.*$",
+		"name": "comment"
+	}],
+	"uuid": "33d31a43-6e5d-46d3-b6b7-c1f4fdaf6501",
+	"scopeName": "source.untitled",
+	"name": "siesta-runner"
+}
