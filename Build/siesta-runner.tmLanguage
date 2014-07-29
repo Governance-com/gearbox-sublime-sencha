@@ -17,18 +17,48 @@
 			</dict>
 			<key>match</key>
 			<string>^(\[PASS\]|ok)(.*)$</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>^(\[(FAIL|WARN|ERROR)\]|\w+Error:|fail)(.*)$</string>
 			<key>name</key>
-			<string>markup.deleted</string>
+			<string>comment</string>
 		</dict>
 		<dict>
 			<key>match</key>
 			<string>^\[(W|WARN)\].*$</string>
 			<key>name</key>
 			<string>markup.changed</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^fail(.*)$</string>
+			<key>name</key>
+			<string>invalid</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^(\[(FAIL|ERROR)\]|\w+Error:|fail|Failed|Got|Need)(.*)$</string>
+			<key>name</key>
+			<string>markup.deleted</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>support.class</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>variable</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^\[(\w+)\] (.*?) \((.*)\)$</string>
 		</dict>
 		<dict>
 			<key>match</key>
@@ -58,8 +88,6 @@
 		<dict>
 			<key>match</key>
 			<string>^.*$</string>
-			<key>name</key>
-			<string>comment</string>
 		</dict>
 	</array>
 	<key>scopeName</key>

@@ -1,9 +1,11 @@
 <snippet>
 	<content><![CDATA[constructor: function(config) {
 	this.debug(arguments);
+
 	Ext.applyIf(config || {}, {
 		${2:$TM_SELECTED_TEXT}
 	});
+
 	return this.callParent(arguments);
 },
 ]]></content>

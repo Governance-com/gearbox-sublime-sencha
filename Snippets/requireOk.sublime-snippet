@@ -1,9 +1,7 @@
 <snippet>
 	<content><![CDATA[t.requireOk([
 	'$1'
-]${2:, function(t) {
-	$3
-\}});$4]]></content>
+]);$2]]></content>
 	<tabTrigger>requireOk</tabTrigger>
 	<scope>source.js</scope>
 </snippet>
