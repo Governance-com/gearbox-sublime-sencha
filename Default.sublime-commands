@@ -1,4 +1,5 @@
 [
    { "caption": "Related Files", "command": "related_files" },
-   { "caption": "Related Files Lucky", "command": "related_files_lucky" }
+   { "caption": "Related Files Lucky", "command": "related_files_lucky" },
+   { "caption": "Class functions", "command": "class_functions" }
 ]

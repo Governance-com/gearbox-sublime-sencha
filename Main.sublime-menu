@@ -15,10 +15,10 @@
                         "caption": "Gearbox",
                         "children":
                         [
-                            { "command": "open_file", "args": {"file": "${packages}/Gearbox/RelatedFiles.sublime-settings"}, "caption": "RelatedFiles Settings – Default" },
+                            { "command": "open_file", "args": {"file": "${packages}/gearbox-sublime-sencha/RelatedFiles.sublime-settings"}, "caption": "RelatedFiles Settings – Default" },
                             { "command": "open_file", "args": {"file": "${packages}/User/RelatedFiles.sublime-settings"}, "caption": "RelatedFiles Settings – User" },
                             { "command": "open_file", "args": {"file": "${packages}/User/Gearbox.sublime-settings"}, "caption": "Settings – User" },
-                            { "command": "open_file", "args": {"file": "${packages}/Gearbox/Gearbox.tmPreferences"}, "caption": "PList Settings – Default" },
+                            { "command": "open_file", "args": {"file": "${packages}/gearbox-sublime-sencha/Gearbox.tmPreferences"}, "caption": "PList Settings – Default" },
                             { "caption": "-" }
                         ]
                     }

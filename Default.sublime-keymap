@@ -1,4 +1,5 @@
 [
   { "keys": ["ctrl+shift+p"], "command": "related_files"},
+  { "keys": ["ctrl+shift+o"], "command": "class_functions"},
   { "keys": ["ctrl+shift+super+p"], "command": "related_files_lucky"}
 ]
