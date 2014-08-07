@@ -1,0 +1,21 @@
+{
+	"applicationPaths": [
+		"/desktop",
+		"/"
+	],
+	"jsduckduckPaths": [
+		"jsduck",
+		"docs"
+	],
+	"jsduckduckargs": [
+		"app",
+		"ext/src",
+		"packages/gearbox/src",
+		"--warnings=-nodoc\\(class,public\\):ext/src",
+		"--warnings=-nodoc\\(member,public\\):ext/src",
+		"--warnings=-link:ext/src",
+		"--warnings=-type_name:ext/src",
+		"--ignore-html=locale,debug",
+		"--images=ext/docs/images"
+	]
+}
