@@ -1,13 +1,14 @@
 import sublime, sublime_plugin, os, re, glob, itertools, json, os.path
 
 class ClassFunctions(object):
-    def __init__(self, file_path, folders):
+    def __init__(self, sublime, file_path, folders):
         self.__file_path = file_path
         self.__root = self.__root(folders)
         self.__descriptions = []
         self.__funcNames = []
         self.__funcs = {}
         self.__className = None
+        self.__sublime = sublime
         self.__build()
 
     # # Retrieves a list of all related descriptions.
@@ -25,7 +26,7 @@ class ClassFunctions(object):
         if os.path.exists(self.getRootApplication() + '/jsduck/docs'):
             duckduckpath = self.getRootApplication() + '/jsduck/docs'
         else:
-            self.__status_msg('No jsduck found')
+            self.__sublime.status_message('No jsduck found')
             return
         print(duckduckpath)
         f = open(self.__file_path, 'r')
@@ -35,7 +36,7 @@ class ClassFunctions(object):
         if doesmatch:
             self.__className = doesmatch.group(2);
         else:
-            self.__status_msg('No class found')
+            self.__sublime.status_message('No class found')
         
     def readJsDuckFunctions(self):
         if self.__className == None:
@@ -43,7 +44,7 @@ class ClassFunctions(object):
 
         parsedJson = self.__readJson(self.__getJsDuckPath(self.__className));
         if parsedJson == None:
-            self.__status_msg('JsDuck json parse error')
+            self.__sublime.status_message('JsDuck json parse error')
             return;
 
         for i, member in enumerate(parsedJson['members']):
@@ -68,7 +69,7 @@ class ClassFunctions(object):
 
         parsedJson = self.__readJson(self.__getJsDuckPath(self.__className));
         if parsedJson == None:
-            self.__status_msg('JsDuck json parse error')
+            self.__sublime.status_message('JsDuck json parse error')
             return;
 
         self.__descriptions.append(parsedJson['extends'] + '(extends)');
@@ -124,10 +125,10 @@ class ClassFunctions(object):
 
     # TODO: make this dynamic
     def getRootApplication(self):
-        if os.path.exists(self.__root + '/app'):
-            return self.__root;
         if os.path.exists(self.__root + '/desktop/app'):
             return self.__root + '/desktop';
+        if os.path.exists(self.__root + '/app'):
+            return self.__root;
 
         return '';
 
@@ -145,7 +146,7 @@ class ClassFunctionsCommand(sublime_plugin.WindowCommand):
         active_file_path = self.__active_file_path()
 
         if active_file_path:
-            self.__funcs = ClassFunctions(active_file_path, sublime.active_window().folders())
+            self.__funcs = ClassFunctions(sublime, active_file_path, sublime.active_window().folders())
             self.__funcs.readJsDuckFunctions();
 
             if index != None:
@@ -173,7 +174,7 @@ class ClassFunctionsCommand(sublime_plugin.WindowCommand):
 
             # TRANSIENT makes it more confusing.
             # view = sublime.set_timeout(lambda: self.window.open_file(filepath), sublime.ENCODED_POSITION | sublime.TRANSIENT))
-            view = sublime.set_timeout(lambda: self.window.open_file(filepath), sublime.ENCODED_POSITION)
+            view = sublime.set_timeout(lambda: self.window.open_file(filepath, sublime.ENCODED_POSITION))
         else:
             sublime.status_message("No functions found")
 
@@ -210,7 +211,7 @@ class ClassRelatedClassesCommand(sublime_plugin.WindowCommand):
         active_file_path = self.__active_file_path()
 
         if active_file_path:
-            self.__funcs = ClassFunctions(active_file_path, sublime.active_window().folders())
+            self.__funcs = ClassFunctions(sublime, active_file_path, sublime.active_window().folders())
             self.__funcs.readJsDuckRelatedClasses();
 
             if index != None:
@@ -235,7 +236,7 @@ class ClassRelatedClassesCommand(sublime_plugin.WindowCommand):
 
             # TRANSIENT makes it more confusing.
             # view = sublime.set_timeout(lambda: self.window.open_file(filepath), sublime.ENCODED_POSITION | sublime.TRANSIENT))
-            view = sublime.set_timeout(lambda: self.window.open_file(filepath), 0)
+            view = sublime.set_timeout(lambda: self.window.open_file(filepath, 0))
         else:
             sublime.status_message("No class found")
 
