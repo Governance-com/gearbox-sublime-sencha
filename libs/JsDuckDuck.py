@@ -1,5 +1,7 @@
 import threading, os, os.path, subprocess, sys, re, json
 
+from .threadprogress import ThreadProgress 
+
 JsDuckActiveTask = None
 ClassPaths = {};
 
@@ -16,7 +18,9 @@ class JsDuckBuild(object):
 
 	def run(self):
 		global JsDuckActiveTask;
-		print('Start jsduck build');
+		self.__progress = ThreadProgress(self.__thread, 'JsDuck building', 'JsDuck finished building');
+
+		# print('Start jsduck build');
 		try:
 			os.stat(self.__duckduckpath)
 		except:
@@ -44,8 +48,9 @@ class JsDuckBuild(object):
 		p.communicate();
 		# End --
 		
-		print('Finished jsduck build');
-		self.__sublime.status_message('Finished building jsduckduck');
+		# print('Finished jsduck build');
+		# self.__sublime.status_message('Finished building jsduckduck');
+		self.__thread.result = True;
 		JsDuckActiveTask = None;
 
 class JsDuckUpdate(object):
@@ -63,23 +68,25 @@ class JsDuckUpdate(object):
 	
 	def run(self):
 		global JsDuckActiveTask;
-		print('Start jsduck update', self.__cur_file[len(self.__root) + 1:]);
+		self.__progress = ThreadProgress(self.__thread, 'JsDuck updating', 'JsDuck finished updating');
+		# print('Start jsduck update', self.__cur_file[len(self.__root) + 1:]);
 		try:
 			os.stat(self.__duckduckpath)
 		except:
 			os.mkdir(self.__duckduckpath) 
 
-		# try:
-		# 	os.stat(os.path.join(self.__duckduckpath, 'docs'))
-		# except:
-		# 	os.mkdir(os.path.join(self.__duckduckpath, 'docs')) 
+		try:
+			os.stat(os.path.join(self.__duckduckpath, 'tempdocs'))
+		except:
+			os.mkdir(os.path.join(self.__duckduckpath, 'tempdocs')) 
 
 		args = ['jsduck'];
-		args.append(self.__cur_file);
+		# args.append(self.__cur_file);
+		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckbuildpaths')
 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckargs');
 		# args.append('--output ' + os.path.join(self.__duckduckpath, 'docs'));
 		args.append('--output=-');
-		args.append('1> ' + os.path.join(self.__duckduckpath, 'docs', self.__classname + '.json'))
+		args.append('1> ' + os.path.join(self.__duckduckpath, 'tempdocs', self.__classname + '.json'))
 
 		# command = ' '.join(args);
 		print(' '.join(args));
@@ -93,8 +100,9 @@ class JsDuckUpdate(object):
 		p.communicate();
 		# End --
 		
-		print('Finished jsduck update', self.__cur_file[len(self.__root) + 1:]);
-		self.__sublime.status_message('Finished updating jsduckduck for ' + self.__cur_file[len(self.__root) + 1:]);
+		# print('Finished jsduck update', self.__cur_file[len(self.__root) + 1:]);
+		# self.__sublime.status_message('Finished updating jsduckduck for ' + self.__cur_file[len(self.__root) + 1:]);
+		self.__thread.result = True;
 		JsDuckActiveTask = None;
 
 class JsDuck(object):
@@ -181,14 +189,15 @@ class JsDuck(object):
 
 	@staticmethod
 	def getSettings(sublime, name):
+		# global settings;
 		# default settings
-		settings = sublime.load_settings("Gearbox.sublime-settings").get(name).copy()
+		setting = sublime.load_settings('Gearbox.sublime-settings').get(name).copy()
 
 		# per project settings
 		if sublime.active_window().active_view().settings().get('Gearbox'):
-			settings.update(sublime.active_window().active_view().settings().get('Gearbox').get(name))
+			setting.update(sublime.active_window().active_view().settings().get('Gearbox').get(name))
 
-		return settings;
+		return setting;
 
 	@staticmethod
 	def loadClassPaths(sublime, curRoot):

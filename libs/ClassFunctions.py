@@ -1,21 +1,22 @@
 import sublime, sublime_plugin, os, re, glob, itertools, json, os.path
 
-from JsDuckDuck import JsDuck
+from .JsDuckDuck import JsDuck
 
 class ClassFunctions(object):
     def __init__(self, sublime, file_path):
         self.__file_path = file_path;
-        self.__descriptions = []
-        self.__funcNames = []
-        self.__funcs = {}
-        self.__className = None
-        self.__sublime = sublime
+        self.__descriptions = [];
+        self.__funcNames = [];
+        self.__files = {};
+        self.__types = {};
+        self.__className = None;
+        self.__sublime = sublime;
 
         self.__appRoot = JsDuck.detectRoot(sublime, file_path);
         if not self.__appRoot:
             return;
         self.__duckRoot = JsDuck.detectJsDuck(sublime, self.__appRoot);
-        self.__build()
+        self.__build();
 
     # # Retrieves a list of all related descriptions.
     def descriptions(self):
@@ -24,8 +25,11 @@ class ClassFunctions(object):
     def className(self):
         return self.__className;
 
-    def funcs(self):
-        return self.__funcs;
+    def files(self):
+        return self.__files;
+
+    def types(self):
+        return self.__types;
 
     def appRoot(self):
         return self.__appRoot;
@@ -65,11 +69,13 @@ class ClassFunctions(object):
             self.__sublime.status_message('JsDuck json parse error')
             return;
 
+        known = {};
         for i, member in enumerate(parsedJson['members']):
             if member['tagname'] == 'method':
                 # self.__descriptions.append(member['name'] + '(' + member['owner'] + ')')
                 self.__descriptions.append([member['name'], member['owner']])
-                self.__funcs[member['name']] = member['owner']
+                self.__files[member['owner'] + ':' + member['name']] = member['files'][0]['filename'] + ':' + str(member['files'][0]['linenr']) + ':1';
+                known[member['name']] = member['owner']
             
         # Add functions from parentClass that are overriden by this class.
         parentClass = parsedJson['extends']
@@ -77,7 +83,8 @@ class ClassFunctions(object):
             parsedJson = self.__readJson(self.__getJsDuckPath(parsedJson['extends']));
             if parsedJson:
                 for i, member in enumerate(parsedJson['members']):
-                    if member['tagname'] == 'method' and self.__funcs.get(member['name'], '') != member['owner']:
+                    if member['tagname'] == 'method' and known.get(member['name'], '') != member['owner']:
+                        self.__files[member['owner'] + ':' + member['name']] = member['files'][0]['filename'] + ':' + str(member['files'][0]['linenr']) + ':1';
                         self.__descriptions.append([member['name'], member['owner']])
 
         self.__descriptions.sort();
@@ -91,11 +98,12 @@ class ClassFunctions(object):
             self.__sublime.status_message('JsDuck json parse error')
             return;
 
+        known = {};
+
         for i, member in enumerate(parsedJson['members']):
-            if member['tagname'] == 'property' and not member.get('static', False):
-                # self.__descriptions.append(member['name'] + '(' + member['owner'] + ')')
-                self.__descriptions.append([member['name'], member['owner']])
-                self.__funcs[member['name']] = member['owner']
+            if self.__validProperty(member):
+                self.__addProperty(member);
+                known[member['name']] = member['owner'];
             
         # Add functions from parentClass that are overriden by this class.
         parentClass = parsedJson['extends']
@@ -103,10 +111,30 @@ class ClassFunctions(object):
             parsedJson = self.__readJson(self.__getJsDuckPath(parsedJson['extends']));
             if parsedJson:
                 for i, member in enumerate(parsedJson['members']):
-                    if member['tagname'] == 'property' and not member.get('static', False) and self.__funcs.get(member['name'], '') != member['owner']:
-                        self.__descriptions.append([member['name'], member['owner']])
+                    if self.__validProperty(member) and known.get(member['name'], '') != member['owner']:
+                        self.__addProperty(member);
 
-        self.__descriptions.sort()
+        self.__descriptions.sort();
+
+    def __validProperty(self, member):
+        return (member['tagname'] == 'property' or member['tagname'] == 'cfg') and not member.get('static', False);
+
+    def __addProperty(self, member):
+        desc = [member['name'], member['owner']];
+        # if member.get('short_doc', ' ...') != ' ...':
+        #     desc.append(member['short_doc']);
+        tags = [];
+        if member.get('type', None) != None:
+            tags.append('type:' + member['type']);
+        if member.get('default', None) != None and len(member['default']) < 20:
+            tags.append('default:' + member['default']);
+
+        if len(tags) != 0:
+            desc.append(', '.join(tags));
+
+        self.__descriptions.append(desc);
+        self.__files[member['owner'] + ':' + member['name']] = member['files'][0]['filename'] + ':' + str(member['files'][0]['linenr']) + ':1';
+        self.__types[member['owner'] + ':' + member['name']] = member.get('type', 'String');
 
     def readJsDuckRelatedClasses(self):
         if self.__className == None:
@@ -158,7 +186,3 @@ class ClassFunctions(object):
     # TODO: parse the bootstrap or make configurable, maybe jsduckduck knows?
     def classNameToPath(self, className):
         return JsDuck.classNameToPath(self.__sublime, self.__appRoot, className);
-
-    # Converts paths to posixpaths.
-    def __to_posixpath(self, path):
-        return re.sub("\\\\", "/", path)

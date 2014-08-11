@@ -1,11 +1,33 @@
 {
-	"propertyTemplate:": [
-		"<name>: "
-	],
+	"autoUpdate": {
+		"enabled": true,
+		"interval": 300
+	},
+	"propertyTemplates": {
+		"String": [
+			"<name>: '$1'"
+		],
+		"Boolean": [
+			"<name>: ${1:false}"
+		],
+		"Object": [
+			"<name>: {",
+			"	'$1': '$1'",
+			"}"
+		],
+		"Array": [
+			"<name>: [",
+			"	${1:''}",
+			"]"
+		],
+		"Number": [
+			"<name>: ${1:0}"
+		]
+	},
 	"functionTemplate": [
 		"<name>: function(config) {",
 		"	this.callParent(arguments);",
-		"	",
+		"	$1",
 		"}"
 	],
 	"applicationPaths": [
@@ -31,7 +53,7 @@
 		"--ignore-html=locale,debug",
 		"--builtin-classes",
 		"--cache",
-		"--processes=4",
+		// "--processes=4",
 		"--no-source",
 		"--no-color",
 		"--export=full"
