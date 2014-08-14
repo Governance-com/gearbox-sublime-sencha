@@ -1,55 +1,196 @@
-# Sublime Text 3 - Gearbox Plugin
+#Gearbox Sublime Sencha
+Congratulations! You're about to supercharge your Ext JS development.
+The Gearbox Sublime Sencha plugin aids development with snippets, shortcuts and
+a little bit of magic.
 
-.. TODO add gearbox description
+[TOC]
 
-![Screenshot](https://raw.github.com/fabiokr/sublime-related-files/master/screenshots/list.png)
+##Prerequisites
+In order to use this package to its full extent, you should first install:
 
-This plugin provides a quick list of related files to the currently open file.
+- [Sencha CMD](http://docs.sencha.com/cmd/index.html)
+- [JsDuck](https://github.com/senchalabs/jsduck)
+- [Sublime Text](https://www.sublimetext.com)
 
-My main use case is to list related files under a Ruby on Rails project. For example, for an opened "app/controllers/examples_controller.rb", related files would be "app/helpers/examples_helper.rb", "app/views/examples/**", and "spec/controllers/examples_controller_spec.rb".
+##Installation
+The only installation steps to take after installing this sublime package are [configuring](#configuration) the package and tell JsDuck to build the docs for the first time. Once configured, run the Rebuild jsDuck [command](#commands) form a file in your project and you're all set!
 
-This plugin was inspired by the existing [Open Related](https://github.com/vojtajina/sublime-OpenRelated) and [Rails Related Files](https://github.com/luqman/SublimeText2RailsRelatedFiles).
+##Related Files
+The related files plugin helps you quickly switch between files that are strongly related, like the Model, View and Controller of the same type.
 
-I wanted something between the two of them (a quick list of results that could be setup for any kinds of projects, not only Rails), so I created my own.
+## Snippets
+Snippets speed up your development by shortening the code you write over and over again. Like a class definition. The Gearbox Sublime Sencha Gear offers four kinds of snippets: 
 
-# Key Shortcut
+- [Ext JS specific snippets](#ext-js-specific-snippets)
+- [Definition snippets](#definition-snippets)
+- [Convenience snippets](#convenience-snippets)
+- [Testing snippets](#testing-snippets)
 
-The default shortcut is mapped to "ctrl+super+p". To change it to something more suitable for your needs, you can easily change that by copying the following and replacing the "keys" to your desired key combination:
+###Ext JS specific snippets
+afterRender
+:	*tabTrigger*: afterRender
+	*selection*: Added as the function body
+Adds an afterRender method to your class, with a call to the parent.
 
-```json
-{ "keys": ["ctrl+super+p"], "command": "related_files"}
-```
+callParent
+:	*tabTrigger*: callParent
+	Adds a call to the parent with arguments.
 
-# Configuration
+constructor
+:	*tabTrigger*: constructor
+Adds a constructor with ApplyIf and a call to the parent.
 
-The plugins comes configured to lookup Rails related files, but you can add your own setups. Let's see an existing example:
+create
+:	*tabTrigger*: create
+	*after*: Ext.Component, config
+	Creates an Ext.create statement.
 
-```json
-// Test/specs for ruby files
-".+\/(app|lib)\/(.+).rb":
-  [
-    "spec/$2_spec.rb",
-    "test/$2_test.rb"
-  ]
-```
+define
+:	*tabTrigger*: define
+	*after*: name, parent, xtype, body
+	*selection*: Added as body
+	Creates an Ext.define statement
 
-The configuration has two parts: the key, which is a regular expression to match against the currently open file, and a list of globs to map the related files.
+requires
+:	*tabTrigger*: requires
+	Adds an empty requires array.
 
-You can use the $1, $2, etc. on the glob strings to be replace by the extracted parts from the regex.
+initComponent
+:	*tabTrigger*: initComponent
+	Inserts Ext JS' initComponent function, with a call to the parent.
 
-In addition to global configs, you can also have per project configs. To add that, in a sublime project file (project-name.sublime-project),
-add this:
+items
+:	*tabTrigger*: items
+	Inserts an array of objects.
+
+mixins
+:	*tabTrigger*: mixins
+	Adds a mixins block with some default Gearbox mixins.
+
+###Definition snippets
+f
+:	*tabTrigger*: f	
+	Adds a new anonymous function
+
+fn
+:	*tabTrigger*: fn	
+	Inserts a new anonymous method
+	
+function
+:	*tabTrigger*: function
+	Adds a new anonymous function with a debug line.
+
+###Gearbox snippets
+log
+:	*tabTrigger*: log
+	*selection*: As argument to the logger. 
+	Adds a call to a local logger: this.log
+
+log variable
+:	*tabTrigger*: logv
+	Add a log showing the value of a variable.
+	
+log annotated
+:	*tabTrigger*: loga
+	Same as logv, but with an annotation.
+
+###Convenience snippets
+console.log variable
+: 	*tabTrigger*: clogv
+	Add a console.log statement to output a variable and its value.
+
+debug
+:	*tabTrigger*: debug
+	*after*: The object to debug
+	Adds a call to this.debug with arguments as the default argument.
+
+each
+:	*tabTrigger*: each
+	Adds a lodash each block. 
+	
+eachPush
+:	*tabTrigger*: eachPush
+	Same as each, but push each item to an array. 
+	
+line
+:	*tabTrigger*: line
+	Adds a line of dashes.
+
+map
+:	*tabTrigger*: map
+	Adds a lodash map block. 
+
+next
+:	*tabTrigger*: next
+	Create a new function with a next function as argument.
+
+promise
+:	*tabTrigger*: promise
+	Add a return Promise block
+
+###Testing snippets
+describe
+:	*tabTrigger*: describe
+	Insert t.describe block. 
+	
+it
+:	*tabTrigger*: it	
+	Insert t.it block.
+
+requireOK
+:	*tabTrigger*: requireOK
+	Insert a requireOK block.
+
+startTest
+:	*tabTrigger*: startTest
+	 Insert a startTest block.
+
+##Commands
+The listed keycodes are the defaults. You can change them in the [configuration](#configuration).
+
+Related Files
+:	*command*: related_files
+	*shortcut*: alt+shift+p
+
+Related Files Lucky
+:	*command*: related_files_lucky
+	*shortcut*: ctrl+shift+alt+p
+
+Class functions
+:	*command*: class_functions
+	*shortcut*: super+alt+r
+
+Class properties
+:	*command*: class_properties
+	*shortcut*: super+alt+ctrl+r
+
+Class related classes
+:	*command*: class_related_classes
+	*shortcut*: super+alt+p
+
+Restart Sublime (dev only)
+:	*command*: restart_sublime
+	*shortcut*: f5
+
+Rebuild jsDuck
+:	*command*: rebuild_jsduck
 
 
-```json
-{
-  "settings":
-  {
-    "RelatedFiles": {
-      "patterns": {
-        // you project patterns
-      }
-    }
-  }
-}
-```
+##Configuration
+
+###Advanced
+These settings are only for advanced users. For a normal project, you won't need to edit any of this.
+
+####Related Files
+In the relatedFiles.sublime-settings file, you can tell the package where to look for related files. This is done using a regexes, but don't despair; the next paragraphs will help you configure it even if you've never written a single regex in your life. 
+
+#####Where to look in general
+The file contains a big commented regex and a couple of smaller regexes, the big one tells the plugin where to look for your js files, the smaller ones tell it where to look for related files.
+
+Here's the big one:
+
+	^.+?\/(?:app|src|tests)(?:\/\\w*)?(?:\/fund)?\/?(.*\/?)?\/(\\w*)(?:\\.t)?\\.js$
+
+Scary, huh? Fear not, for a normal project, you'll need not edit anything. This regex describes the general structure of your project. 
+
+#####Where to look for related files.
