@@ -1,9 +1,16 @@
 import sublime, sublime_plugin, os, re, glob, itertools, json, os.path, sys, time;
 from sublime import Region;
 
-from .libs.ClassFunctions import ClassFunctions
-from .libs.JsDuckDuck import JsDuck
-from .libs.Settings import Settings
+try:
+	# python 3 / Sublime Text 3
+	from .libs.ClassFunctions import ClassFunctions
+	from .libs.JsDuckDuck import JsDuck
+	from .libs.Settings import Settings
+except ValueError:
+	# python 2 / Sublime Text 2
+	from libs.ClassFunctions import ClassFunctions
+	from libs.JsDuckDuck import JsDuck
+	from libs.Settings import Settings
 
 def isJavascriptFile(view):
 	return view.score_selector(0, Settings.get('syntax_scopes', 'source.js')) > 0
@@ -182,7 +189,7 @@ class ClassRelatedClassesCommand(ClassFuncBase):
 		view = sublime.set_timeout(lambda: self.window().open_file(filepath, 0))
 
 class RebuildJsduckCommand(ClassBase):
-	def run(self):
+	def run(self, edit):
 		active_file_path = self.active_file_path();
 
 		root = JsDuck.detectRoot(sublime, active_file_path);
@@ -195,22 +202,23 @@ class RebuildJsduckCommand(ClassBase):
 			return;
 
 		JsDuck.buildJsDuck(sublime, root);
+	
+# Disabled until properly fixed.	
+# class RebuildJsduckFileCommand(ClassBase):
+# 	def run(self):
+# 		active_file_path = self.active_file_path();
+
+# 		if JsDuck.isActive(): 
+# 			sublime.status_message('JsDuck is already active...');
+# 			return;
+
+# 		self._funcs = ClassFunctions(sublime, active_file_path);
 		
-class RebuildJsduckFileCommand(ClassBase):
-	def run(self):
-		active_file_path = self.active_file_path();
+# 		if not self._funcs.isValid():
+# 			sublime.status_message('Invalid file.');
+# 			return;
 
-		if JsDuck.isActive(): 
-			sublime.status_message('JsDuck is already active...');
-			return;
-
-		self._funcs = ClassFunctions(sublime, active_file_path);
-		
-		if not self._funcs.isValid():
-			sublime.status_message('Invalid file.');
-			return;
-
-		JsDuck.updateJsDuck(sublime, self._funcs.appRoot(), active_file_path, self._funcs.className());
+# 		JsDuck.updateJsDuck(sublime, self._funcs.appRoot(), active_file_path, self._funcs.className());
 
 class RestartSublimeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

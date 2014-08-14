@@ -53,57 +53,57 @@ class JsDuckBuild(object):
 		self.__thread.result = True;
 		JsDuckActiveTask = None;
 
-class JsDuckUpdate(object):
-	def __init__(self, sublime, curRoot, curFile, className):
-		self.__sublime = sublime;
-		self.__root = curRoot;
-		self.__cur_file = curFile;
-		self.__classname = className;
-		self.__duckduckpath = JsDuck.detectJsDuck(sublime, curRoot);
-		self.__thread = threading.Thread(None, lambda: self.run());
-		self.__thread.start();
+# class JsDuckUpdate(object):
+# 	def __init__(self, sublime, curRoot, curFile, className):
+# 		self.__sublime = sublime;
+# 		self.__root = curRoot;
+# 		self.__cur_file = curFile;
+# 		self.__classname = className;
+# 		self.__duckduckpath = JsDuck.detectJsDuck(sublime, curRoot);
+# 		self.__thread = threading.Thread(None, lambda: self.run());
+# 		self.__thread.start();
 
-	def thread(self):
-		return self.__thread;
+# 	def thread(self):
+# 		return self.__thread;
 	
-	def run(self):
-		global JsDuckActiveTask;
-		self.__progress = ThreadProgress(self.__thread, 'JsDuck updating', 'JsDuck finished updating');
-		# print('Start jsduck update', self.__cur_file[len(self.__root) + 1:]);
-		try:
-			os.stat(self.__duckduckpath)
-		except:
-			os.mkdir(self.__duckduckpath) 
+# 	def run(self):
+# 		global JsDuckActiveTask;
+# 		self.__progress = ThreadProgress(self.__thread, 'JsDuck updating', 'JsDuck finished updating');
+# 		# print('Start jsduck update', self.__cur_file[len(self.__root) + 1:]);
+# 		try:
+# 			os.stat(self.__duckduckpath)
+# 		except:
+# 			os.mkdir(self.__duckduckpath) 
 
-		try:
-			os.stat(os.path.join(self.__duckduckpath, 'tempdocs'))
-		except:
-			os.mkdir(os.path.join(self.__duckduckpath, 'tempdocs')) 
+# 		try:
+# 			os.stat(os.path.join(self.__duckduckpath, 'tempdocs'))
+# 		except:
+# 			os.mkdir(os.path.join(self.__duckduckpath, 'tempdocs')) 
 
-		args = ['jsduck'];
-		# args.append(self.__cur_file);
-		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckbuildpaths')
-		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckargs');
-		# args.append('--output ' + os.path.join(self.__duckduckpath, 'docs'));
-		args.append('--output=-');
-		args.append('1> ' + os.path.join(self.__duckduckpath, 'tempdocs', self.__classname + '.json'))
+# 		args = ['jsduck'];
+# 		# args.append(self.__cur_file);
+# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckbuildpaths')
+# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckargs');
+# 		# args.append('--output ' + os.path.join(self.__duckduckpath, 'docs'));
+# 		args.append('--output=-');
+# 		args.append('1> ' + os.path.join(self.__duckduckpath, 'tempdocs', self.__classname + '.json'))
 
-		# command = ' '.join(args);
-		print(' '.join(args));
+# 		# command = ' '.join(args);
+# 		print(' '.join(args));
 
-		# Please do not change this, thank you.
-		# Start -- 
-		p = subprocess.Popen(' '.join(args), cwd=self.__root, shell=True, stderr=subprocess.PIPE);
-		output = '';
-		for line in iter(p.stderr.readline, b''):
-			print(line);
-		p.communicate();
-		# End --
+# 		# Please do not change this, thank you.
+# 		# Start -- 
+# 		p = subprocess.Popen(' '.join(args), cwd=self.__root, shell=True, stderr=subprocess.PIPE);
+# 		output = '';
+# 		for line in iter(p.stderr.readline, b''):
+# 			print(line);
+# 		p.communicate();
+# 		# End --
 		
-		# print('Finished jsduck update', self.__cur_file[len(self.__root) + 1:]);
-		# self.__sublime.status_message('Finished updating jsduckduck for ' + self.__cur_file[len(self.__root) + 1:]);
-		self.__thread.result = True;
-		JsDuckActiveTask = None;
+# 		# print('Finished jsduck update', self.__cur_file[len(self.__root) + 1:]);
+# 		# self.__sublime.status_message('Finished updating jsduckduck for ' + self.__cur_file[len(self.__root) + 1:]);
+# 		self.__thread.result = True;
+# 		JsDuckActiveTask = None;
 
 class JsDuck(object):
 
@@ -142,14 +142,14 @@ class JsDuck(object):
 		JsDuckActiveTask = JsDuckBuild(sublime, curRoot);
 		sublime.status_message('Building jsduckduck...');
 
-	@staticmethod
-	def updateJsDuck(sublime, curRoot, curFile, className):
-		global JsDuckActiveTask;
-		if JsDuck.isActive():
-			sublime.status_message('A jsduck task is already running');
-			return;
-		JsDuckActiveTask = JsDuckUpdate(sublime, curRoot, curFile, className);
-		sublime.status_message('Updating jsduckduck: ' + curFile);
+	# @staticmethod
+	# def updateJsDuck(sublime, curRoot, curFile, className):
+	# 	global JsDuckActiveTask;
+	# 	if JsDuck.isActive():
+	# 		sublime.status_message('A jsduck task is already running');
+	# 		return;
+	# 	JsDuckActiveTask = JsDuckUpdate(sublime, curRoot, curFile, className);
+	# 	sublime.status_message('Updating jsduckduck: ' + curFile);
 
 	@staticmethod
 	def detectRoot(sublime, curFile):

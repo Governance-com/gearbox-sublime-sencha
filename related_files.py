@@ -1,5 +1,12 @@
 import sublime, sublime_plugin, os, re, glob, itertools
 
+try:
+    # python 3 / Sublime Text 3
+    from .libs.Settings import Settings
+except ValueError:
+    # python 2 / Sublime Text 2
+    from libs.Settings import Settings
+
 class Related(object):
     # Initializes the RelatedFiles object.
     #
@@ -110,12 +117,9 @@ class RelatedFilesCommand(sublime_plugin.WindowCommand):
     # Retrieves the patterns from settings.
     def __patterns(self):
         # default settings
-        patterns = sublime.load_settings("RelatedFiles.sublime-settings").get('patterns').copy()
 
-        # per project settings
-        if sublime.active_window().active_view().settings().get('RelatedFiles'):
-            patterns.update(sublime.active_window().active_view().settings().get('RelatedFiles').get('patterns'))
-
+        patterns = Settings.get("relatedFilesPatterns");
+        
         return patterns
 
     # Returns the activelly open file path from sublime.
