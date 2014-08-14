@@ -178,19 +178,104 @@ Rebuild jsDuck
 
 ##Configuration
 
+All configuration options explained.
+
+### "propertyTemplates"
+Snippet templates used to insert properties into the file **< name >** gets replaced with the property name.
+This format uses 1 array entry per line, and supports Sublime Snippet features.
+
+	"String": [
+		"<name>: '$1'"
+	],
+	"Boolean": [
+		"<name>: ${1:false}"
+	],
+	"Object": [
+		"<name>: {",
+		"	'$1': '$1'",
+		"}"
+	],
+	"Array": [
+		"<name>: [",
+		"	${1:''}",
+		"]"
+	],
+	"Number": [
+		"<name>: ${1:0}"
+	]
+
+### "functionTemplate"
+Snippet templates used to insert functions into the file **< name >** gets replaced with the property name.
+This format uses 1 array entry per line, and supports Sublime Snippet features.
+
+	"<name>: function(config) {",
+		"	this.callParent(arguments);",
+		"	$1",
+	"}"
+	
 ###Advanced
 These settings are only for advanced users. For a normal project, you won't need to edit any of this.
 
-####Related Files
-In the relatedFiles.sublime-settings file, you can tell the package where to look for related files. This is done using a regexes, but don't despair; the next paragraphs will help you configure it even if you've never written a single regex in your life. 
+#### "autoUpdate"
+This is an **experimental** feature still being worked on, it will try to update class information in the background.
+
+	"enabled": false,
+	"interval": 300
+
+
+
+#### "applicationPaths"
+Paths the plugin will look for a valid application folder, relative to working directory root.
+
+	[
+		"/desktop",
+		"/"
+	]
+
+#### "jsduckduckPaths"
+Paths where the plugin will look for valid jsduck formatted data to use to provide related functions/properties/classes, relative to application folder.
+
+	[
+		"jsduck",
+		"docs"
+	]
+
+#### "jsduckduckbuildpaths"
+Folders to include when building jsduck information, relative to application folder.
+
+	[
+		"app",
+		"ext/src"
+	]
+
+#### "jsduckduckargs"
+Only edit when you really know how jsduck and this plugin works.
+
+####"relatedFilesPatterns"
+This is done using a regexes, but don't despair; you don't need to configure anything.
 
 #####Where to look in general
 The file contains a big commented regex and a couple of smaller regexes, the big one tells the plugin where to look for your js files, the smaller ones tell it where to look for related files.
 
 Here's the big one:
 
-	^.+?\/(?:app|src|tests)(?:\/\\w*)?(?:\/fund)?\/?(.*\/?)?\/(\\w*)(?:\\.t)?\\.js$
+	^.+?\/(?:app|src|tests)(?:\/\\w*)?(.*\/?)?\/(\\w*)(?:\\.t)?\\.js$
 
 Scary, huh? Fear not, for a normal project, you'll need not edit anything. This regex describes the general structure of your project. 
 
 #####Where to look for related files.
+
+Search for any files matching the following structure($1=currentModuleName, $2=currentFileName):
+
+      "*/model/$2.js",
+      "*/model/*/$2.js",
+      "*/model/*/*/$2.js",
+
+      "*/$1/$2.*js",
+      "*/*/$1/$2.*js",
+      "*/*/*/$1/$2.*js",
+
+      "*/packages/gearbox/*/$1/$2.*js",
+      "*/packages/gearbox/*/*/$1/$2.*js",
+
+      "*/ext/src/$1/$2.js"
