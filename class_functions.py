@@ -222,10 +222,20 @@ class RebuildJsduckCommand(ClassBase):
 
 class RestartSublimeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		curdir = os.path.dirname(os.path.realpath(__file__));
+		if sys.platform == 'win32':
+			os.execl(sys.executable, '');
+		else:
+			if sys.platform == 'darwin':
+				os.execl(os.path.join(curdir, 'restartsublime_mac.sh'), '');
+			else:
+				os.execl(os.path.join(curdir, 'restartsublime_linux.sh'), '');
 		# #!/bin/bash
 		# killall 'Sublime Text'
 		# /Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text
-		os.execl('/Users/admin/restartsublime.sh', '');
+		# os.execl(os.path.join(curdir, 'restartsublime_mac.sh'), '');
+
+
 
 lastRun = time.time(); # Don't run directly after editting first file.
 scheduled = False;
