@@ -3,18 +3,16 @@
 	extend: '${2:Ext.}',
 	xtype: '${3:${1/\.//g}}',
 
-	//
-
-	mixins: [
+	mixins: [${4:
 		'Gearbox.mixin.ModelInfo',
-		'Gearbox.mixin.Logger'
+		'Gearbox.mixin.Logger'}
 	],
 
 	logLevel: 'debug',
 
 	//
 
-	${4:$TM_SELECTED_TEXT}
+	${5:$TM_SELECTED_TEXT}
 });
 ]]></content>
 	<tabTrigger>define</tabTrigger>

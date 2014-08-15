@@ -1,13 +1,13 @@
  [
+  { "keys": ["ctrl+shift+p"], "command": "related_files"},
+  { "keys": ["ctrl+shift+alt+p"], "command": "related_files_lucky"},
+  { "keys": ["super+alt+p"], "command": "class_related_classes"},
+
   { "keys": ["ctrl+alt+r"], "command": "class_functions"},
   { "keys": ["ctrl+alt+shift+r"], "command": "class_functions_insert"},
 
   { "keys": ["ctrl+alt+y"], "command": "class_properties"},
   { "keys": ["ctrl+alt+shift+y"], "command": "class_properties_insert"},
 
-  { "keys": ["ctrl+alt+p"], "command": "class_related_classes"},
-
-  { "keys": ["ctrl+shift+p"], "command": "related_files"},
-  { "keys": ["ctrl+shift+alt+p"], "command": "related_files_lucky"},
   { "keys": ["f5"], "command": "restart_sublime"}
 ]
