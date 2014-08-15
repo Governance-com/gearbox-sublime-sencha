@@ -1,5 +1,11 @@
 <snippet>
-	<content><![CDATA[constructor: function(config) {
+	<content><![CDATA[
+	/**
+	 * @method constructor
+	 * @param  {Object} config Configuration
+	 * @return {Object}
+	 */
+	constructor: function(config) {
 	this.debug(arguments);
 
 	Ext.applyIf(config || {}, {

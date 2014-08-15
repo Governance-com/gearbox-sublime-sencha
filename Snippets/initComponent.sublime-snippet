@@ -1,5 +1,11 @@
 <snippet>
-	<content><![CDATA[initComponent: function() {
+	<content><![CDATA[
+/**
+ * @method initComponent
+ * @inheritdoc
+ * @return {void}
+ */
+initComponent: function() {
 	this.debug(arguments);
 	${2:$TM_SELECTED_TEXT}
 	this.callParent(arguments);

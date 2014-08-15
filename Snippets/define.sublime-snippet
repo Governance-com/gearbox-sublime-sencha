@@ -1,18 +1,35 @@
 <snippet>
-	<content><![CDATA[Ext.define('$1', {
+	<content><![CDATA[
+/**
+ * @class $1 ${1/(.)/\U$1/}
+ * @extends ${2:Ext.}
+ * @xtype ${3:${1/\.//g}}
+ * 
+${4/^\s*'(.*?)',?/\ \*\ @mixins $1/gm}
+ * 
+${5/^\s*'(.*?)',?/\ \*\ @requires $1/gm}
+ */
+Ext.define('$1', {
 	extend: '${2:Ext.}',
 	xtype: '${3:${1/\.//g}}',
 
-	mixins: [${4:
-		'Gearbox.mixin.ModelInfo',
+	//
+
+	mixins: [
+		${4:'Gearbox.mixin.ModelInfo',
 		'Gearbox.mixin.Logger'}
 	],
+
+
+	requires: [
+		${5:''}
+	]
 
 	logLevel: 'debug',
 
 	//
 
-	${5:$TM_SELECTED_TEXT}
+	${6:$TM_SELECTED_TEXT}
 });
 ]]></content>
 	<tabTrigger>define</tabTrigger>

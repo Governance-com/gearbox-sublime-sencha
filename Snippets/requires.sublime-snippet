@@ -1,5 +1,8 @@
 <snippet>
 	<content><![CDATA[
+/**
+ * @requires ${1/,/\n\ \*\ @requires\ /mg}
+ */
 requires: [
 	'$1'
 ],$2

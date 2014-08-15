@@ -1,5 +1,11 @@
 <snippet>
-	<content><![CDATA[afterRender: function() {
+	<content><![CDATA[
+/**
+ * @method afterRender
+ * @inheritdoc
+ * @return {void}
+ */
+afterRender: function() {
 	this.debug(arguments);
 	${2:$TM_SELECTED_TEXT}
 	this.callParent(arguments);

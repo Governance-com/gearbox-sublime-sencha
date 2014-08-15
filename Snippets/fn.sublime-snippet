@@ -1,9 +1,15 @@
 <snippet>
-	<content><![CDATA[function($1) {
+	<content><![CDATA[
+/**
+ * @method $1 [description]
+ * @param {[type]} $2
+ * @return {void}
+ */
+$1: function($2) {
 	this.debug(arguments);
 
-	${2:$TM_SELECTED_TEXT}
-},$3
+	${3:$TM_SELECTED_TEXT}
+},$4
 ]]></content>
 	<tabTrigger>fn</tabTrigger>
 	<scope>source.js</scope>
