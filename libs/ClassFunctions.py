@@ -1,6 +1,11 @@
 import sublime, sublime_plugin, os, re, glob, itertools, json, os.path
 
-from .JsDuckDuck import JsDuck
+try:
+    # python 3 / Sublime Text 3
+    from .JsDuck import JsDuck
+except ValueError:
+    # python 2 / Sublime Text 2
+    from JsDuck import JsDuck
 
 class ClassFunctions(object):
     def __init__(self, sublime, file_path):
@@ -59,6 +64,11 @@ class ClassFunctions(object):
             self.__sublime.status_message('No class found in file')
 
         print(self.__className);
+
+    def notFound(self): 
+        build = self.__sublime.ok_cancel_dialog('No jsduck data found, build now?');
+        if build:
+            JsDuck.buildJsDuck(self.__sublime, self.__appRoot);
         
     def readJsDuckFunctions(self):
         if self.__className == None:
@@ -66,7 +76,7 @@ class ClassFunctions(object):
 
         parsedJson = self.__readJson(self.__getJsDuckPath(self.__className));
         if parsedJson == None:
-            self.__sublime.status_message('JsDuck json parse error')
+            self.notFound();
             return;
 
         known = {};
@@ -95,7 +105,7 @@ class ClassFunctions(object):
 
         parsedJson = self.__readJson(self.__getJsDuckPath(self.__className));
         if parsedJson == None:
-            self.__sublime.status_message('JsDuck json parse error')
+            self.notFound();
             return;
 
         known = {};
@@ -142,7 +152,7 @@ class ClassFunctions(object):
 
         parsedJson = self.__readJson(self.__getJsDuckPath(self.__className));
         if parsedJson == None:
-            self.__sublime.status_message('JsDuck json parse error')
+            self.notFound();
             return;
 
         self.__descriptions.append([parsedJson['extends'], 'extends']);
@@ -181,7 +191,7 @@ class ClassFunctions(object):
         return parsedJson; 
 
     def __getJsDuckPath(self, className):
-        return self.__duckRoot + '/docs/' + className + '.json';
+        return os.path.join(JsDuck.getJsDuckPath(self.__duckRoot), className + '.json');
 
     # TODO: parse the bootstrap or make configurable, maybe jsduckduck knows?
     def classNameToPath(self, className):

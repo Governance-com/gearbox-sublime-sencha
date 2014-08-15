@@ -1,11 +1,11 @@
 [
-   { "caption": "Related Files", "command": "related_files" },
-   { "caption": "Related Files Lucky", "command": "related_files_lucky" },
-   { "caption": "Class functions(lookup)", "command": "class_functions" },
-   { "caption": "Class functions(insert)", "command": "class_functions_insert" },
-   { "caption": "Class properties(lookup)", "command": "class_properties" },
-   { "caption": "Class properties(insert)", "command": "class_properties_insert" },
-   { "caption": "Class related classes", "command": "class_related_classes" },
-   { "caption": "Restart Sublime (dev only)", "command": "restart_sublime" },
-   { "caption": "Rebuild jsDuck", "command": "rebuild_jsduck" }
+   { "caption": "Gearbox: Related Files", "command": "related_files" },
+   { "caption": "Gearbox: Related Files Lucky", "command": "related_files_lucky" },
+   { "caption": "Gearbox: Class functions(lookup)", "command": "class_functions" },
+   { "caption": "Gearbox: Class functions(insert)", "command": "class_functions_insert" },
+   { "caption": "Gearbox: Class properties(lookup)", "command": "class_properties" },
+   { "caption": "Gearbox: Class properties(insert)", "command": "class_properties_insert" },
+   { "caption": "Gearbox: Class related classes", "command": "class_related_classes" },
+   { "caption": "Gearbox: Restart Sublime (dev only)", "command": "restart_sublime" },
+   { "caption": "Gearbox: Rebuild jsDuck", "command": "rebuild_jsduck" }
 ]

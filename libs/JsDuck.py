@@ -31,11 +31,12 @@ class JsDuckBuild(object):
 		# except:
 		# 	os.mkdir(os.path.join(self.__duckduckpath, 'docs')) 
 
-		args = ['jsduck'];
-		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckbuildpaths')
-		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckargs')
-		args.append('--output ' + os.path.join(self.__duckduckpath, 'docs'));
-
+		# Use /bin/bash -l to be compatible with ruby 1.9, 2.0 installs gems in /usr/bin
+		args = ['/bin/bash -l -c "jsduck'];
+		args = args + JsDuck.getSettings(self.__sublime, 'jsduckbuildpaths')
+		args = args + JsDuck.getSettings(self.__sublime, 'jsduckargs')
+		args.append('--output ' + JsDuck.getJsDuckPath(self.__duckduckpath));
+		args.append("\"");
 		# command = ' '.join(args);
 		print(' '.join(args));
 
@@ -49,7 +50,7 @@ class JsDuckBuild(object):
 		# End --
 		
 		# print('Finished jsduck build');
-		# self.__sublime.status_message('Finished building jsduckduck');
+		# self.__sublime.status_message('Finished building jsduck');
 		self.__thread.result = True;
 		JsDuckActiveTask = None;
 
@@ -82,8 +83,8 @@ class JsDuckBuild(object):
 
 # 		args = ['jsduck'];
 # 		# args.append(self.__cur_file);
-# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckbuildpaths')
-# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckduckargs');
+# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckbuildpaths')
+# 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckargs');
 # 		# args.append('--output ' + os.path.join(self.__duckduckpath, 'docs'));
 # 		args.append('--output=-');
 # 		args.append('1> ' + os.path.join(self.__duckduckpath, 'tempdocs', self.__classname + '.json'))
@@ -101,7 +102,7 @@ class JsDuckBuild(object):
 # 		# End --
 		
 # 		# print('Finished jsduck update', self.__cur_file[len(self.__root) + 1:]);
-# 		# self.__sublime.status_message('Finished updating jsduckduck for ' + self.__cur_file[len(self.__root) + 1:]);
+# 		# self.__sublime.status_message('Finished updating jsduck for ' + self.__cur_file[len(self.__root) + 1:]);
 # 		self.__thread.result = True;
 # 		JsDuckActiveTask = None;
 
@@ -126,7 +127,7 @@ class JsDuck(object):
 			return False;
 
 		duckduckpath = JsDuck.detectJsDuck(sublime, curRoot);
-		if os.path.exists(os.path.join(duckduckpath, 'docs')):
+		if os.path.exists(JsDuck.getJsDuckPath(duckduckpath)):
 			return True;
 		
 		JsDuck.buildJsDuck(sublime, curRoot);
@@ -140,7 +141,7 @@ class JsDuck(object):
 			sublime.status_message('A jsduck task is already running');
 			return;
 		JsDuckActiveTask = JsDuckBuild(sublime, curRoot);
-		sublime.status_message('Building jsduckduck...');
+		sublime.status_message('Building jsduck...');
 
 	# @staticmethod
 	# def updateJsDuck(sublime, curRoot, curFile, className):
@@ -149,7 +150,7 @@ class JsDuck(object):
 	# 		sublime.status_message('A jsduck task is already running');
 	# 		return;
 	# 	JsDuckActiveTask = JsDuckUpdate(sublime, curRoot, curFile, className);
-	# 	sublime.status_message('Updating jsduckduck: ' + curFile);
+	# 	sublime.status_message('Updating jsduck: ' + curFile);
 
 	@staticmethod
 	def detectRoot(sublime, curFile):
@@ -180,12 +181,16 @@ class JsDuck(object):
 		if not curRoot:
 			return None;
 
-		settings = JsDuck.getSettings(sublime, 'jsduckduckPaths');
+		settings = JsDuck.getSettings(sublime, 'jsduckPaths');
 		for path in settings:
-			if os.path.exists(os.path.join(curRoot, path, 'docs')) :
+			if os.path.exists(os.path.join(curRoot, path, 'json')) :
 				return os.path.join(curRoot, path);
 
 		return os.path.join(curRoot, settings[0]);
+
+	@staticmethod
+	def getJsDuckPath(docsRoot):
+		return os.path.join(docsRoot, 'json');
 
 	@staticmethod
 	def getSettings(sublime, name):

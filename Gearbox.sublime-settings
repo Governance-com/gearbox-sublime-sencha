@@ -34,15 +34,15 @@
 		"/desktop",
 		"/"
 	],
-	"jsduckduckPaths": [
+	"jsduckPaths": [
 		"jsduck",
 		"docs"
 	],
-	"jsduckduckbuildpaths": [
+	"jsduckbuildpaths": [
 		"app",
 		"ext/src"
 	],
-	"jsduckduckargs": [
+	"jsduckargs": [
 		"--warnings=-nodoc\\(class,public\\):ext/src",
 		"--warnings=-nodoc\\(member,public\\):ext/src",
 		"--warnings=-link:ext/src",

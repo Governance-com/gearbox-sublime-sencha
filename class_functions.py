@@ -4,12 +4,12 @@ from sublime import Region;
 try:
 	# python 3 / Sublime Text 3
 	from .libs.ClassFunctions import ClassFunctions
-	from .libs.JsDuckDuck import JsDuck
+	from .libs.JsDuck import JsDuck
 	from .libs.Settings import Settings
 except ValueError:
 	# python 2 / Sublime Text 2
 	from libs.ClassFunctions import ClassFunctions
-	from libs.JsDuckDuck import JsDuck
+	from libs.JsDuck import JsDuck
 	from libs.Settings import Settings
 
 def isJavascriptFile(view):
@@ -50,15 +50,15 @@ class ClassFuncBase(ClassBase):
 
 			self.window().show_quick_panel(self._funcs.descriptions(), self.open_file)
 		else:
-			sublime.status_message("No open files")
+			sublime.status_message("No open file")
 
 	# Opens the file in path.
 	def open_file(self, index):
 		if index >= 0 and len(self._funcs.descriptions()) > index:
 			curEntry = self._funcs.descriptions()[index]
 			self.open(curEntry);
-		else:
-			sublime.status_message("Nothing found")
+		# else:
+		# 	sublime.status_message("Nothing found")
 
 	def load(self):
 		pass
@@ -227,8 +227,10 @@ class RestartSublimeCommand(sublime_plugin.TextCommand):
 			os.execl(sys.executable, '');
 		else:
 			if sys.platform == 'darwin':
+				os.chmod(os.path.join(curdir, 'restartsublime_mac.sh'), 1877); # 755
 				os.execl(os.path.join(curdir, 'restartsublime_mac.sh'), '');
 			else:
+				os.chmod(os.path.join(curdir, 'restartsublime_mac.sh'), 1877); # 755
 				os.execl(os.path.join(curdir, 'restartsublime_linux.sh'), '');
 		# #!/bin/bash
 		# killall 'Sublime Text'

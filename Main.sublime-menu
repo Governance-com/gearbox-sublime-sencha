@@ -15,9 +15,9 @@
                         "caption": "Gearbox",
                         "children":
                         [
-                            { "command": "open_file", "args": {"file": "${packages}/gearbox-sublime-sencha/Gearbox.sublime-settings"}, "caption": "Settings – Default" },
+                            { "command": "open_file", "args": {"file": "${packages}/GearboxSencha/Gearbox.sublime-settings"}, "caption": "Settings – Default" },
                             { "command": "open_file", "args": {"file": "${packages}/User/Gearbox.sublime-settings"}, "caption": "Settings – User" },
-                            { "command": "open_file", "args": {"file": "${packages}/gearbox-sublime-sencha/Gearbox.tmPreferences"}, "caption": "PList Settings – Default" },
+                            { "command": "open_file", "args": {"file": "${packages}/GearboxSencha/Gearbox.tmPreferences"}, "caption": "PList Settings – Default" },
                             { "caption": "-" }
                         ]
                     }
