@@ -2,14 +2,14 @@
 	<content><![CDATA[
 /**
  * @method $1 [description]
- * @param {[type]} $2
+${2/([^,]+),?\s*/\ \*\ @param\ {[type]}\ $1\t\t[Description of $1]\n/g} 
  * @return {void}
  */
 $1: function($2) {
-	this.debug(arguments);
+	${3:this.debug(arguments); //Gearbox Logger Gear}
 
-	${3:$TM_SELECTED_TEXT}
-},$4
+	${4:$TM_SELECTED_TEXT}
+},$5
 ]]></content>
 	<tabTrigger>fn</tabTrigger>
 	<scope>source.js</scope>
