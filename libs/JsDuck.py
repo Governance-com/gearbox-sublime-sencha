@@ -32,11 +32,17 @@ class JsDuckBuild(object):
 		# 	os.mkdir(os.path.join(self.__duckduckpath, 'docs')) 
 
 		# Use /bin/bash -l to be compatible with ruby 1.9, 2.0 installs gems in /usr/bin
-		args = ['/bin/bash -l -c "jsduck'];
+		args = [];
+		if not sys.platform == 'win32':
+			args.append('/bin/bash -l -c');
+
+		args.append("jsduck");
 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckbuildpaths')
 		args = args + JsDuck.getSettings(self.__sublime, 'jsduckargs')
 		args.append('--output ' + JsDuck.getJsDuckPath(self.__duckduckpath));
-		args.append("\"");
+
+		if not sys.platform == 'win32':
+			args.append("\"");
 		# command = ' '.join(args);
 		print(' '.join(args));
 
