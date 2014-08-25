@@ -514,7 +514,7 @@ Paths the plugin will look for a valid application folder, relative to working d
 ]
 ```
 
-#### "jsduckduckPaths"
+#### "jsduckPaths"
 Paths where the plugin will look for valid jsduck formatted data to use to provide related functions/properties/classes, relative to application folder.
 
 ```json
@@ -524,7 +524,7 @@ Paths where the plugin will look for valid jsduck formatted data to use to provi
 ]
 ```
 
-#### "jsduckduckbuildpaths"
+#### "jsduckbuildpaths"
 Folders to include when building jsduck information, relative to application folder.
 
 ```json
@@ -534,7 +534,7 @@ Folders to include when building jsduck information, relative to application fol
 ]
 ```
 
-#### jsduckduckargs
+#### jsduckargs
 Only edit when you really know how jsduck and this plugin works.
 
 ####relatedFilesPatterns
