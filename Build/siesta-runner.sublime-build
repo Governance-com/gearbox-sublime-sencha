@@ -1,19 +1,16 @@
 {
-	"working_dir": "${file/^(.*)\\/(app|src|tests).+$/$1/g}",
+	"working_dir": "${file/^(.*?)\\/(packages|app|src|tests).+$/$1/g}/",
 	"cmd": [
-		"/usr/local/bin/phantomjs",
-		"siesta/bin/phantomjs-launcher.js",
-		"siesta/bin",
-		"http://127.0.0.1:7357/tests.html",
+		"/usr/local/bin/phantomjs", "--web-security=false",
+		"packages/gearbox-testing/siesta/bin/phantomjs-launcher.js",
+		"packages/gearbox-testing/siesta/bin",
+		"file://${file/^(.*?)\\/(packages|app|src|tests).+$/$1/g}/tests-no-ui.html",
 		"--verbose",
-		// "--debug",
 		"--no-color",
-		"--jenkins",
-		"--filter",
-		"${file/^.*?(app|src|tests)\\/([^\\.]+).+$/$2/g}"
+		"--filter", "${file/^.*?\\/(app|src|tests)\\/([^\\.]+).+$/$2/g}\\.t",
+		"--pause", "0"
 	],
-	// "file_regex": "([^\\ ]+?):([0-9]+)",
 	"file_regex": " ([A-Za-z0-9_\\.\/]+?):([0-9]+)",
 	"selector": "source.js",
-	"syntax": "Packages/gearbox-sublime-sencha/Build/siesta-runner.tmLanguage"
+	"syntax": "Packages/GearboxSencha/Build/siesta-runner.tmLanguage"
 }
